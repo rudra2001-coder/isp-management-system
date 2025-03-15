@@ -1,0 +1,23 @@
+import { useEffect, useState } from "react";
+import axios from "axios";
+
+export default function Home() {
+    const [message, setMessage] = useState("");
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        axios.get("http://localhost:5000/")
+            .then((res) => setMessage(res.data))
+            .catch((err) => {
+                console.error(err);
+                setError("Failed to fetch data from the server.");
+            });
+    }, []);
+
+    return (
+        <div>
+            <h1>ISP Client Management System</h1>
+            {error ? <p style={{ color: 'red' }}>{error}</p> : <p>{message}</p>}
+        </div>
+    );
+} 
